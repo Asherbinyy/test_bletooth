@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_ble/Home/presentation/manager/scooter_Data.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:get/get.dart';
 
@@ -10,18 +11,19 @@ class HomeController extends GetxController {
   late TextEditingController writeController = TextEditingController();
   BluetoothDevice? connectedDevice;
   List<BluetoothService> services = [];
-    final Map<Guid, List<int>> _readValues = <Guid, List<int>>{};
-  Map<Guid, List<int>> get readValues => _readValues;
-    // update the read values
-    void updateReadValue( Guid uuid,  List<int> value) {
-      _readValues[uuid] = value;
-      update();
-    }
+  final Map<Guid, List<int>> _readValues = <Guid, List<int>>{};
 
+  Map<Guid, List<int>> get readValues => _readValues;
+
+  // update the read values
+  void updateReadValue(Guid uuid, List<int> value) {
+    _readValues[uuid] = value;
+    update();
+  }
 
   Future<void> stopScan() async => await _flutterBlue.stopScan();
 
-   Future<void> connectDevice(BluetoothDevice device) async {
+  Future<void> connectDevice(BluetoothDevice device) async {
     await stopScan();
     try {
       await device.connect();
@@ -33,6 +35,12 @@ class HomeController extends GetxController {
       services = await device.discoverServices();
     }
     connectedDevice = device;
+    update();
+  }
+
+  /// TODO : review
+  void writeCharacteristic({required ScooterCommands command}) {
+    writeController.text = command.code;
     update();
   }
 
