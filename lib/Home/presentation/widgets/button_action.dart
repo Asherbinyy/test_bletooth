@@ -1,16 +1,14 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_ble/Home/presentation/manager/home_controller.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import 'package:get/get.dart';
 
 List<ButtonTheme> buildReadWriteNotifyButton({
   required BluetoothCharacteristic characteristic,
   required BuildContext context,
-  required void Function( Guid uuid,  List<int> value) updateState,
+  required void Function(Guid uuid, List<int> value) updateState,
   required TextEditingController writeController,
 }) {
+  print('HELLO ');
+
   List<ButtonTheme> buttons = <ButtonTheme>[];
 
   if (characteristic.properties.read) {
@@ -25,7 +23,7 @@ List<ButtonTheme> buildReadWriteNotifyButton({
             onPressed: () async {
               var sub = characteristic.value.listen((value) {
                 updateState(characteristic.uuid, value);
-                 // setState(() {
+                // setState(() {
                 //   widget.readValues[characteristic.uuid] = value;
                 // });
               });
@@ -66,7 +64,25 @@ List<ButtonTheme> buildReadWriteNotifyButton({
                           child: const Text("Send"),
                           onPressed: () {
                             characteristic.write(
-                                utf8.encode(writeController.value.text));
+                              [
+                                0xA3,
+                                0xA4,
+                                0x08,
+                                0x50,
+                                0x1E,
+                                0x1F,
+                                0x51,
+                                0x73,
+                                0x70,
+                                0x77,
+                                0x49,
+                                0x2A,
+                                0x59,
+                                0x46,
+                                0x01,
+                              ],
+                            );
+                            // utf8.encode(writeController.value.text));
                             Navigator.pop(context);
                           },
                         ),
@@ -96,7 +112,7 @@ List<ButtonTheme> buildReadWriteNotifyButton({
             child: const Text('NOTIFY', style: TextStyle(color: Colors.white)),
             onPressed: () async {
               characteristic.value.listen((value) {
-                updateState( characteristic.uuid, value);
+                updateState(characteristic.uuid, value);
                 // setState(() {
                 //   widget.readValues[characteristic.uuid] = value;
                 // });
