@@ -9,7 +9,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeController = Get.put(HomeController());
+    final HomeController homeController = Get.put(HomeController());
     return Scaffold(
       appBar: AppBar(
         title: const Text("Bluetooth Discovery"),

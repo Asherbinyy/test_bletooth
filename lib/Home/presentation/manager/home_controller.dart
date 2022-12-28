@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_ble/Home/presentation/manager/scooter_Data.dart';
@@ -51,8 +53,15 @@ class HomeController extends GetxController {
     }
   }
 
+  // void testWriting (){
+  //
+  //   services.first.characteristics.first.write(
+  //       utf8.encode('[A3, A4, 08, 50, 1E, 1F, 51, 73, 70, 77, 49, 2A, 59, 46, 01]'));
+  // }
+  //
   @override
   void onInit() {
+
     _flutterBlue.connectedDevices
         .asStream()
         .listen((List<BluetoothDevice> devices) {

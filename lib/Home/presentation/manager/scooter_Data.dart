@@ -18,3 +18,6 @@ enum ScooterCommands {
   final String code;
   const ScooterCommands(this.code);
 }
+/// [A3, A4, 08, 50, 1E, 1F, 51, 73, 70, 77, 49, 2A, 59, 46, 01]
+
+// scooter read Characteristics

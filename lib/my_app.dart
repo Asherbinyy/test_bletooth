@@ -6,13 +6,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-    debugShowCheckedModeBanner: false,
-     title: 'Test Bluetooth',
-    themeMode: ThemeMode.dark,
-    darkTheme: ThemeData.dark(),
-    theme: ThemeData(
-      primarySwatch: Colors.blue,
-    ),
-    home: const HomePage( ),
-  );
+        debugShowCheckedModeBanner: false,
+        title: 'Product Bluetooth',
+        themeMode: ThemeMode.dark,
+        darkTheme: ThemeData.dark(),
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const HomePage(),
+        // home:    ProductPage(product: Product.example()),
+      );
 }
