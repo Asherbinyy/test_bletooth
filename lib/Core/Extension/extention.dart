@@ -3,4 +3,6 @@ extension HexSuffix on int {
     final asString = "0x${this}";
     return int.parse(asString);
   }
+
 }
+

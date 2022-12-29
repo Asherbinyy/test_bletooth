@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ble/Core/Helper/hex_helper.dart';
 import 'package:flutter_ble/Home/presentation/manager/home_controller.dart';
 import 'package:flutter_ble/Home/presentation/widgets/available_devices_builder.dart';
 import 'package:flutter_ble/Home/presentation/widgets/connected_devices_builder.dart';
@@ -17,6 +18,9 @@ class HomePage extends StatelessWidget {
       body: GetBuilder<HomeController>(
           init: homeController,
           builder: (_) {
+
+
+
             return (_.connectedDevice != null)
                 ? ConnectedDevicesBuilder(
                     services: _.services,
