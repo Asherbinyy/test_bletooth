@@ -46,4 +46,12 @@ class HexHelper extends ArithmeticOperators {
 
     return result;
   }
+
+ List<int> hexToBytes(String hex) {
+    final bytes = <int>[];
+    for (var i = 0; i < hex.length; i += 2) {
+      bytes.add(int.parse(hex.substring(i, i + 2), radix: 16));
+    }
+    return bytes;
+  }
 }

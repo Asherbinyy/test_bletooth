@@ -3,6 +3,7 @@ import 'package:flutter_ble/Services/Scooter/ScooterActivity/Interface/scooter_a
 import 'package:flutter_ble/Services/Scooter/ScooterOperations/Interface/scooter_decoder_interface.dart';
 import 'package:flutter_ble/Services/Scooter/ScooterOperations/Interface/scooter_encoder_interface.dart';
 import 'package:flutter_ble/Services/Scooter/ScooterOperations/Interface/scooter_operations_interface.dart';
+import 'package:flutter_ble/Services/Scooter/crc8.dart';
 
 
 part 'scooter_operations.dart';
