@@ -1,12 +1,24 @@
 import 'package:flutter_ble/Core/Helper/hex_helper.dart';
 import 'package:flutter_ble/Services/Scooter/ScooterActivity/Interface/scooter_activity.dart';
+import 'package:archive/archive_io.dart';
 
-class CrC8 {
-  // static const int _crc8TableLength = 256;
-  // static const int _crc8Polynomial = 0x07;
-  // static const int _crc8InitialValue = 0x00;
-  // static const int _crc8FinalXorValue = 0x00;
+import "dart:async"
+    show Completer, Future, Stream, StreamController, StreamSubscription;
+import "dart:convert"
+    show
+        ByteConversionSink,
+        ByteConversionSinkBase,
+        Converter,
+        Encoding,
+        StringConversionSink,
+        StringConversionSinkBase,
+        Utf8Codec;
+import "dart:collection" show UnmodifiableListView;
+import "dart:io" show File, FileMode, RandomAccessFile, ZLibCodec;
+import "dart:math" show min, max;
+import "dart:typed_data" show ByteData, Endianness, Uint8List;
 
+class CrC {
   // String getCRC8(ScooterActivity activity) {
   //   var crc = 0;
   //   for (var i = 0; i < data.length; i++) {
@@ -14,8 +26,16 @@ class CrC8 {
   //   }
   //   return crc.toRadixString(16);
   // }
+    int computeCRC(List<int> bytes, [int crc = 0]) {
+    crc = crc ^ 0xffffffff;
 
+    for (var byte in bytes) {
+      // crc = _cRC8Table[crc ^ byte] ^ (crc >> 8);
+      crc =  int.parse( HexHelper().xor( _cRC8Table[crc ^ byte], '${(crc >> 8)}')) ;
+    }
 
+    return crc ^ 0xffffffff;
+  }
   String getCRC8(ScooterActivity activity) {
     String crc = '0';
     String data = activity.toHex();
@@ -23,10 +43,11 @@ class CrC8 {
     // for (var i = dataLength; i < 0; i--) {
     //   crc = int.parse(_cRC8Table[crc ^ int.parse(activity.data![i])], radix: 16);
     // }
-   while (dataLength-- >0) {
-       crc  = _cRC8Table[int.parse(HexHelper().xor(crc.toString(), (int.parse(data,radix:16)+1).toString()))];
+    while (dataLength-- > 0) {
+      crc = _cRC8Table[int.parse(HexHelper()
+          .xor(crc.toString(), (int.parse(data, radix: 16) + 1).toString()))];
     }
-    return int.parse(crc,radix: 16).toRadixString(16);
+    return int.parse(crc, radix: 16).toRadixString(16);
   }
 
   final List<String> _cRC8Table = const [

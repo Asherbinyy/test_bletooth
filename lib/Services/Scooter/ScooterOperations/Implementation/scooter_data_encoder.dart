@@ -31,24 +31,22 @@ class ScooterDataEncoder extends ScooterEncoderInterface {
     );
   }
 
-  /// step 3 : XOR key to each byte of data
-  List<String> _updateWithCrc8() {
+  /// step 3 : Turn Code to Hex
+  List<String> _turnIntoBytes() {
     final result = _xorRandToEachByte().toBytes();
     // print('crc8 result : => $result');
     return result;
   }
 
   /// step 4 : encode Crc value
-  List<String> _updateWithCrc() {
-    ///TODO :  change later
-    return _updateWithCrc8();
+  List<String> _updateWithCrc8() {
+    final result = _turnIntoBytes();
+    return result;
   }
 
   /// Step 5 : calculate final result
   @override
   List<String> get encode {
-    return _updateWithCrc();
+    return _updateWithCrc8();
   }
 }
-
-
