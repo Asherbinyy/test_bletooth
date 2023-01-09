@@ -6,7 +6,8 @@ class ScooterCreator {
   static final ScooterCreator _instance = ScooterCreator._();
   factory ScooterCreator() => _instance;
 
-  ScooterInit init(String key) => ScooterInit(key: key);
-  ScooterOn on(String key) => ScooterOn(key: key);
+  ScooterInit init() => ScooterInit();
+
+  ScooterOn on(String rand) => ScooterOn(rand: rand);
 
 }

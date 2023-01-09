@@ -1,4 +1,3 @@
-import 'package:flutter_ble/Core/Helper/hex_helper.dart';
 import 'package:flutter_ble/Services/Scooter/ScooterOperations/Implementation/imports_scooter_operation.dart';
 
 class ScooterActivity {
@@ -63,9 +62,35 @@ class ScooterActivity {
     rand = hex.substring(6, 8);
     key = hex.substring(8, 10);
     cmd = hex.substring(10, 12);
-    data = hex.substring(12, hex.length).split(',');
+    // data = hex.substring()
+    // data= calcData(hex);
+    data = [];
+    final hamada = hex.substring(12, 12 + int.parse(length!) * 2).split('');
+    int i = 1;
+    String keyItem = '';
+
+    for (String item in hamada) {
+      if (i % 2 != 0) {
+        keyItem = item;
+      } else {
+        data?.add(keyItem + item);
+        keyItem = '';
+      }
+      i = i + 1;
+     }
   }
 
+  //
+  // List<String>? calcData (String hex){
+  //   List <String>? data = [];
+  //   final dataAsString = hex.substring(12 ,hex.length) ;
+  //   final dataAsList = dataAsString.split('').toList();
+  //   for (var i = 0; i < dataAsList.length ~/2 ; i+2) {
+  //     final concatinated = dataAsList[i]+dataAsList[i+1];
+  //     data.add(concatinated);
+  //   }
+  //   return data;
+  // }
   String toHex() {
     return toBytes().map((e) => e).join('');
   }
@@ -78,35 +103,4 @@ class ScooterActivity {
     final updated = ScooterActivity.fromHex(data);
     return updated;
   }
-
-// /// step 1 : add 32 to rand
-// String add32ToRand() {
-//   final randResult = HexHelper().add(rand ?? '00', "32");
-//   print('add32ToRand: $randResult');
-//   return randResult;
-// }
-//
-// /// step 2 XOR rand to each byte of data
-// ScooterActivity _xorRandToEachByte() {
-//   final updatedRand = add32ToRand();
-//   final oldRand = rand;
-//   final List<String> updatedData =
-//       (data ?? []).map((e) => HexHelper().xor(e, oldRand??'00')).toList();
-//
-//   return ScooterActivity.copyWith(
-//     stxI: stxI,
-//     stxII: stxII,
-//     length: length,
-//     rand: updatedRand,
-//     key: HexHelper().xor(key ?? '00', oldRand??'00'),
-//     cmd: HexHelper().xor(cmd ?? '00', oldRand??'00'),
-//     data: updatedData,
-//   );
-// }
-//
-// List<String> crc8() {
-//   final result = _xorRandToEachByte ().toBytes();
-//   print('crc8 result : => $result');
-//   return result ;
-// }
 }

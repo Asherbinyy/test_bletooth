@@ -40,8 +40,10 @@ class ScooterDataEncoder extends ScooterEncoderInterface {
 
   /// step 4 : encode Crc value
   List<String> _updateWithCrc8() {
-    final result = _turnIntoBytes();
-    return result;
+    final input = _turnIntoBytes();
+    final crc = CrC().calculateFrom(input);
+    input.add(crc);
+    return input;
   }
 
   /// Step 5 : calculate final result

@@ -7,6 +7,6 @@ abstract class ArithmeticOperators {
 
  String  xnor(String a, String b);
 
-
+ String not(String a);
 
 }
