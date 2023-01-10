@@ -7,7 +7,6 @@ List<ButtonTheme> buildReadWriteNotifyButton({
   required void Function(Guid uuid, List<int> value) updateState,
   required TextEditingController writeController,
 }) {
-  print('HELLO ');
 
   List<ButtonTheme> buttons = <ButtonTheme>[];
 

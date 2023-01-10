@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_ble/Home/presentation/manager/scooter_Data.dart';
+import 'package:flutter_ble/Services/Scooter/scooter_creator.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:get/get.dart';
 
@@ -37,12 +38,21 @@ class HomeController extends GetxController {
       services = await device.discoverServices();
     }
     connectedDevice = device;
+    if (connectedDevice != null) {
+      _initializeScooter();
+    }
     update();
   }
 
+  final ScooterCreator _scooterOrders = ScooterCreator();
+  void _initializeScooter (){
+  final scooter=  _scooterOrders.init();
+     writeCharacteristic(command:  scooter.cmd??'' );
+  }
+
   /// TODO : review
-  void writeCharacteristic({required ScooterCommands command}) {
-    writeController.text = command.code;
+  void writeCharacteristic({required String command}) {
+    writeController.text = command;
     update();
   }
 
