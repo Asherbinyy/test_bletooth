@@ -18,15 +18,17 @@ class HomePage extends StatelessWidget {
       body: GetBuilder<HomeController>(
           init: homeController,
           builder: (_) {
-
-
-
             return (_.connectedDevice != null)
                 ? ConnectedDevicesBuilder(
                     services: _.services,
+                    turnOn: () {},
+                    turnOff: () {},
                   )
+
                 : AvailableDevicesBuilder(
                     devicesList: _.devicesList,
+                    turnOn: () {},
+                    turnOff: () {},
                     onConnectionPressed: (dev) async {
                       await _.connectDevice(dev);
                     },

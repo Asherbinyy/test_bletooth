@@ -3,14 +3,21 @@ import 'package:flutter_ble/Home/presentation/manager/home_controller.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:get/get.dart';
 
-
 class AvailableDevicesBuilder extends StatelessWidget {
   // devicesList
   final List<BluetoothDevice> devicesList;
   final Function(BluetoothDevice device) onConnectionPressed;
+  final VoidCallback turnOn;
 
-  const AvailableDevicesBuilder({Key? key, required this.devicesList, required this.onConnectionPressed})
-      : super(key: key);
+  final VoidCallback turnOff;
+
+  const AvailableDevicesBuilder({
+    Key? key,
+    required this.devicesList,
+    required this.onConnectionPressed,
+    required this.turnOn,
+    required this.turnOff,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +41,7 @@ class AvailableDevicesBuilder extends StatelessWidget {
                   'Connect',
                   style: TextStyle(color: Colors.white),
                 ),
-                onPressed: ()   {
+                onPressed: () {
                   onConnectionPressed(device);
                 },
               ),
@@ -47,10 +54,33 @@ class AvailableDevicesBuilder extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.all(8),
       children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: turnOn,
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.green,
+                  ),
+                  child: const Text('Scooter On'),
+                ),
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: turnOff,
+                  child: const Text('Scooter Off'),
+                ),
+              ),
+            ],
+          ),
+        ),
         ...containers,
       ],
     );
   }
 }
-
-
