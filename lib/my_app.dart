@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     ];
 
     ScooterActivity.fromHex('A3A408501E1F572B2A482C64282889');
-     final ScooterDataDecoder decode= ScooterDataDecoder(input: 'A3A408501E1F572B2A482C64282889');
+     final ScooterDataDecoder decode= ScooterDataDecoder(input: 'a3a401468c041639');
       print('decode => ${decode.decode}');
     // final operation = CrC().computeCRC(array);
     // print('op => ${op.toString()}');

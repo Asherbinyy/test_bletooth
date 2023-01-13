@@ -62,24 +62,30 @@ List<ButtonTheme> buildReadWriteNotifyButton({
                         TextButton(
                           child: const Text("Send"),
                           onPressed: () {
+                             List<int> list = writeController.text.replaceAll('[', '').replaceAll(']', '').replaceAll("0x", "").split(',').map<int>((e) {
+                                return int.parse(e,radix: 16); //use tryParse if you are not confirm all content is int or require other handling can also apply it here
+                              }).toList();
+                              print("write list=> : $list");
+
                             characteristic.write(
-                              [
-                                0xA3,
-                                0xA4,
-                                0x08,
-                                0x50,
-                                0x1E,
-                                0x1F,
-                                0x51,
-                                0x73,
-                                0x70,
-                                0x77,
-                                0x49,
-                                0x2A,
-                                0x59,
-                                0x46,
-                                0x01,
-                              ],
+                              list,
+                              // [
+                              //   0xA3,
+                              //   0xA4,
+                              //   0x08,
+                              //   0x50,
+                              //   0x1E,
+                              //   0x1F,
+                              //   0x51,
+                              //   0x73,
+                              //   0x70,
+                              //   0x77,
+                              //   0x49,
+                              //   0x2A,
+                              //   0x59,
+                              //   0x46,
+                              //   0x01,
+                              // ],
                             );
                             // utf8.encode(writeController.value.text));
                             Navigator.pop(context);
@@ -111,6 +117,8 @@ List<ButtonTheme> buildReadWriteNotifyButton({
             child: const Text('NOTIFY', style: TextStyle(color: Colors.white)),
             onPressed: () async {
               characteristic.value.listen((value) {
+                List convertedNum = value.map((num) =>  num.toRadixString(16)).toList();
+                print("converted => $convertedNum");
                 updateState(characteristic.uuid, value);
                 // setState(() {
                 //   widget.readValues[characteristic.uuid] = value;
