@@ -90,7 +90,6 @@ List<ButtonTheme> buildReadWriteNotifyButton({
                           onPressed: () {
                               var data =  ScooterActivity.fromHex('A3A404${key}${key}6102020202').encode();
                               print("data=> $data");
-                              inspect(data);
                               final List<int> lint = data.map((e)=>int.parse(e,radix: 16)).toList();
                               characteristic.write(
                                   lint
@@ -103,7 +102,6 @@ List<ButtonTheme> buildReadWriteNotifyButton({
                           onPressed: () {
                               var data =  ScooterActivity.fromHex('A3A404${key}${key}6101010101').encode();
                               print("data=> $data");
-                              inspect(data);
                               final List<int> lint = data.map((e)=>int.parse(e,radix: 16)).toList();
                               characteristic.write(
                                   lint
@@ -114,9 +112,8 @@ List<ButtonTheme> buildReadWriteNotifyButton({
                         TextButton(
                           child: const Text("Lock"),
                           onPressed: () {
-                              var data =  ScooterActivity.fromHex('A3A404${key}${key}6101010101').encode();
+                              var data =  ScooterActivity.fromHex('A3A401${key}${key}1501').encode();
                               print("data=> $data");
-                              inspect(data);
                               final List<int> lint = data.map((e)=>int.parse(e,radix: 16)).toList();
                               characteristic.write(
                                   lint
@@ -127,14 +124,29 @@ List<ButtonTheme> buildReadWriteNotifyButton({
                         TextButton(
                           child: const Text("Unlock"),
                           onPressed: () {
-                              var data =  ScooterActivity.fromHex('A3A404${key}${key}0A01000000000000000000').encode();
-                              print("data=> $data");
-                              inspect(data);
+                              var data =  ScooterActivity.fromHex('A3A40A${key}${key}050163F748130000000000').encode();
+                              print("unlock data=> $data");
                               final List<int> lint = data.map((e)=>int.parse(e,radix: 16)).toList();
                               characteristic.write(
                                   lint
                               );
                               Navigator.pop(context);
+                          },
+                        ),
+                        TextButton(
+                          child: const Text("query"),
+                          onPressed: () {
+                              var data =  ScooterActivity.fromHex('A3A401${key}${key}5101').encode();
+                              print("unlock data=> $data");
+                              final List<int> lint = data.map((e)=>int.parse(e,radix: 16)).toList();
+                              characteristic.write(
+                                  lint
+                              );
+                              Navigator.pop(context);
+                              List<int> list = writeController.text.replaceAll('[', '').replaceAll(']', '').replaceAll("0x", "").split(',').map<int>((e) {
+                                return int.parse(e,radix: 16); //use tryParse if you are not confirm all content is int or require other handling can also apply it here
+                              }).toList();
+                              print("write list=> : $list");
                           },
                         ),
                         TextButton(

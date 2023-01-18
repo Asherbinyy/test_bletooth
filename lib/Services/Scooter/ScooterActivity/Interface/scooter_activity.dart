@@ -65,7 +65,7 @@ class ScooterActivity {
     // data = hex.substring()
     // data= calcData(hex);
     data = [];
-    final hamada = hex.substring(12, 12 + int.parse(length!) * 2).split('');
+    final hamada = hex.substring(12, 12 + int.parse(length!,radix: 16) * 2).split('');
     int i = 1;
     String keyItem = '';
 
